@@ -1,0 +1,32 @@
+; Draw following series using loops:
+;A a B b C c D d . . . X x Y y Z z
+
+.model small
+.stack 100h
+.data
+
+.code
+main proc
+  mov bl,65
+  mov cx,26
+  
+  L1: 
+  mov dl,bl   
+  mov ah,2
+  int 21h
+  
+  mov dl,bl
+  add dl,32
+  
+  mov ah,2
+  int 21h
+  
+  inc bl
+
+  loop L1
+  
+  mov ah,4ch
+  int 21h
+  
+main endp
+end main
