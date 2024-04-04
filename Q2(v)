@@ -1,0 +1,49 @@
+;Draw following series using loops:
+;A C F J O U     (A+2=C, C+3=F, F+4=J, J+5=O, O+6=U)    
+
+.model small
+.stack 100h
+.data
+
+.code
+main proc
+    mov dl, 'A'    
+    mov ah, 2      
+    mov cx, 6      
+
+L1:
+    int 21h        
+
+    cmp dl, 'A'
+    je increment2
+    cmp dl, 'C'
+    je increment3
+    cmp dl, 'F'
+    je increment4
+    cmp dl, 'J'
+    je increment5
+    cmp dl, 'O'
+    je increment6
+
+increment2:
+    add dl, 2      
+    jmp L2
+increment3:
+    add dl, 3      
+    jmp L2
+increment4:
+    add dl, 4      
+    jmp L2
+increment5:
+    add dl, 5      
+    jmp L2
+increment6:
+    add dl, 6      
+
+L2:
+    loop L1  
+exit:
+    mov ah, 4ch   
+    int 21h
+main endp
+end main
