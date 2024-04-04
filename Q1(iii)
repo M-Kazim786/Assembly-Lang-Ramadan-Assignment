@@ -1,0 +1,35 @@
+;Input any letter and then show it 100 times.  
+
+.model small
+.stack 100h
+.data
+      msg1 db 'Enter a letter$'
+      
+.code
+main proc
+      mov ax,@data
+      mov ds,ax
+      
+      lea dx,msg1 
+      mov ah,9
+      int 21h
+      
+      mov ah,1
+      int 21h  
+      
+      
+      mov cx,100  
+      mov dl,al
+      L1:
+      
+      mov ah,2
+      int 21h  
+      
+      
+      loop L1
+      
+      exit:
+      mov ah,4ch
+      int 21h
+main endp
+end main
