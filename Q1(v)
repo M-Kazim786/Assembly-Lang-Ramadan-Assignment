@@ -1,0 +1,56 @@
+;Input any capital letter and then show all capital letters
+; from A to given input alphabet.
+
+.model small
+.stack 100h
+.data
+   msg1 db 'Enter a capital letter$'
+.code
+main proc
+      mov ax,@data
+      mov ds,ax
+      
+      lea dx,msg1
+      mov ah,9
+      int 21h   
+      
+      mov dx,10
+      mov ah,2
+      int 21h
+      
+      mov dx,13
+      mov ah,2
+      int 21h
+      
+      
+      mov ah,1
+      int 21h
+      
+      mov bl,al
+      mov dl,'A'
+      mov ah,2
+      int 21h
+      
+      cmp dl,bl
+      jne L1 
+      je exit    
+      
+      mov cx,26
+      
+      L1:  
+    
+      inc dl  
+      mov ah,2
+      int 21h 
+      cmp dl,bl
+      je exit
+      
+      loop L1
+      
+      exit:      
+      mov ah,4ch
+      int 21h
+      
+      
+main endp
+end main
