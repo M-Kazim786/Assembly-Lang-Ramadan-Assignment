@@ -1,0 +1,45 @@
+;Display given patterns using loops:
+; ii)  J J J J J J J J J J
+;      I I I I I I I I I
+;      .
+;      .
+;      CCC
+;      BB
+;      A  
+
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov bl, 'J'        
+    mov cx, 10        
+
+L2:
+    push cx            
+
+L1:
+    mov dl, bl         
+    mov ah,2       
+    int 21h            
+
+    loop L1            
+
+    mov dl, 10         
+    mov ah,2        
+    int 21h            
+
+    mov dl, 13         
+    int 21h            
+    
+    pop cx            
+    dec bl           
+
+    dec cx             
+    jnz L2             
+
+    mov ah,4ch        
+    int 21h            
+
+main endp
+end main
