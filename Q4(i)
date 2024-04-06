@@ -1,7 +1,6 @@
-;) Define a string 'Computer' and then show it
-; in given series using loops:
+;) Define a string 'Computer' and then show it in given series using loops:  
 
-; i) CAoBmCpDuEtFeGrH 
+; i) CAoBmCpDuEtFeGrH    (Alphabets in order after each character)
 
 
 .model small
