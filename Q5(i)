@@ -1,0 +1,59 @@
+;Define a string 'Computer' and then show it in given patterns using loops:
+
+; i) C
+;    Co
+;    Com
+;    Comp
+;    Compu
+;    Comput
+;    Compute
+;    Computer 
+
+
+.model small
+.stack 100h
+.data
+  
+  msg db 'Computer','$'
+  newline db 13, 10, '$'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+         
+    
+    mov cx,1 
+   
+    
+    L2:
+    push cx
+    mov si,offset msg
+    
+    L1:  
+     
+    mov dx,[si]
+    mov ah,2
+    int 21h
+    
+    inc si
+    
+    loop L1 
+    
+    mov dx, offset newline 
+    mov ah, 9
+    int 21h
+    
+    
+    pop cx
+    inc cx  
+    cmp cx,9
+    jnz loop L2
+    
+    mov ah,4ch
+    int 21h
+    
+    
+       
+main endp
+end main
