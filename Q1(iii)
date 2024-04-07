@@ -3,7 +3,10 @@
 .model small
 .stack 100h
 .data
-      msg1 db 'Enter a letter$'
+      msg1 db 'Enter a letter:$'  
+      input db ?
+      output db ?
+      newline db 10,13,'$'
       
 .code
 main proc
@@ -15,21 +18,25 @@ main proc
       int 21h
       
       mov ah,1
-      int 21h  
+      int 21h 
+      mov input,al 
       
+      lea dx,newline
+      mov ah,9
+      int 21h
       
       mov cx,100  
-      mov dl,al
+      mov dl,input 
+      mov output,dl
       L1:
-      
       mov ah,2
       int 21h  
-      
       
       loop L1
       
       exit:
       mov ah,4ch
-      int 21h
+      int 21h     
+      
 main endp
 end main
