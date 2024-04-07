@@ -4,8 +4,7 @@
 .stack 100h
 .data  
       msg1 db 'Enter an alphabet:$'
-      msg2 db 'The next alphabet is',':$'
-      msg3 db  'Invalid$'  
+      msg2 db 'The next alphabet is',':$' 
       newline db 10,13,'$'   
       input db ?
       output db ?
@@ -13,9 +12,8 @@
 main proc
     mov ax,@data
     mov ds,ax  
-    
-      
-    mov dx,offset msg1  
+   
+   mov dx,offset msg1  
     mov ah,9 
     int 21h
     
