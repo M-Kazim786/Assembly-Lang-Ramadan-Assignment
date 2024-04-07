@@ -6,46 +6,43 @@
       msg1 db 'Enter an alphabet:$'
       msg2 db 'The next alphabet is',':$'
       msg3 db  'Invalid$'  
-      newline db 10,13,'$'
+      newline db 10,13,'$'   
+      input db ?
+      output db ?
 .code
 main proc
     mov ax,@data
     mov ds,ax  
     
-    lea dx,msg1
-    mov ah,9
+      
+    mov dx,offset msg1  
+    mov ah,9 
     int 21h
     
     mov ah,1
+    int 21h   
+    mov input,al        
+    
+    mov dx,offset newline 
+    mov ah,9 
+    int 21h  
+   
+      
+    mov dx,offset msg2  
+    mov ah,9 
     int 21h
     
-    mov dl,al
-    cmp dl,'A'
-    je invalid
-    
-    cmp dl,'Y'
-    je invalid
-    
-    cmp dl,'Z'
-    je invalid  
-    
-        
-    inc dl
-            
+      
+    mov dl,input
+    inc dl       
+    mov output,dl  
     mov ah,2
     int 21h  
-
-    jmp exit
-    
-    
-    invalid:
-    lea dx,msg3       
-    mov ah,9
-    int 21h  
+   
     
     exit:
     mov ah,4ch
-    int 21h
+    int 21h  
     
 main endp
 end main
