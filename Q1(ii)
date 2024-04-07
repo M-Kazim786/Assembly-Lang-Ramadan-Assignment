@@ -23,7 +23,7 @@ main proc
     int 21h   
     mov input,al
     
-    mov dx,offset newline
+    lea dx, newline
     mov ah,9
     int 21h 
     
