@@ -37,10 +37,11 @@
     
     mov cx,bx
     mov si,offset msg
-    mov ah,2
+   
     
     L3:
     mov dx,[si]
+    mov ah,2
     int 21h
     inc si
     
@@ -59,3 +60,4 @@
     
  main endp
  end main
+
