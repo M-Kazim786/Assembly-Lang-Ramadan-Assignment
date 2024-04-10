@@ -1,0 +1,78 @@
+; Define a string 'Computer' and then show it in given patterns using loops:
+
+;iii) r
+;     re
+;     ret
+;     retu
+;     retup
+;     retupm
+;     retupmo
+;     retupmoC
+
+.model small
+.stack 100h
+.data
+   
+   msglength dw 0
+   msg db 'Computer$' 
+   msgrev db 100 dup('$')
+   newline db 10,13,'$'
+   
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov si,offset msg  
+    mov cx,0
+    
+    stackem:
+    mov al,[si]
+    inc si
+    cmp al,'$'
+    je donerev
+    push ax
+    inc cx
+    jmp stackem
+    
+    donerev:
+    mov msglength,cx
+    mov di,offset msgrev
+    
+    unstackem:
+    pop ax
+    mov [di],al
+    inc di
+    loop unstackem
+    
+    mov cx,1
+    
+    outloop:
+    mov si,offset msgrev
+    push cx
+    
+    innerloop:
+    mov dl,[si]
+    mov ah,2
+    int 21h
+    
+    inc si 
+     
+    loop innerloop
+    
+    mov dx,offset newline
+    mov ah,9
+    int 21h  
+    
+    pop cx 
+    inc cx  
+    cmp cx,9
+    jnz outloop
+   
+    exit:
+    mov ah,4ch
+    int 21h
+ 
+main endp
+end main
+       
