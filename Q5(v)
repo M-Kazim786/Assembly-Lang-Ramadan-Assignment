@@ -1,0 +1,98 @@
+;Define a string 'Computer' and then show it in given patterns using loops:
+
+; v) ABCDEFGHr
+;    ABCDEFGre
+;    ABCDEFret
+;    ABCDEretu
+;    ABCDretup
+;    ABCretupm
+;    ABretupmo
+;    AretupmoC        
+
+.model small
+.stack 100h
+.data
+  msglength dw 0
+  msg db 'Computer$'
+  msgrev db 100 dup('$')
+  newline db 10,13,'$'
+  
+.code
+main proc  
+    
+    mov ax,@data
+    mov ds,ax
+    
+;First we reverse the string 
+   
+    mov si,offset msg  
+    mov cx,0
+    
+    stackem:
+    mov al,[si]
+    inc si
+    cmp al,'$'
+    je donerev
+    push ax
+    inc cx
+    jmp stackem
+    
+    donerev:
+    mov msglength,cx
+    mov di,offset msgrev
+    
+    unstackem:
+    pop ax
+    mov [di],al
+    inc di
+    loop unstackem   
+    
+;Now we print the pattern
+    
+    mov bx,1
+    
+    L1:
+    mov cx,9   
+  
+    sub cx,bx  
+  
+    mov dl,64    
+        
+    L2:  
+         
+    inc dl  
+    mov ah,2
+    int 21h
+   
+ 
+    loop L2
+  
+    mov cx,bx
+    mov si,offset msgrev
+    
+    L3:
+    mov dl,[si]
+    mov ah,2
+    int 21h
+    inc si
+    
+    loop L3
+    
+    lea dx,newline
+    mov ah,9
+    int 21h
+    
+    inc bx 
+    
+    cmp bx,9
+    
+    jnz loop L1
+    
+    exit:
+    mov ah,4ch
+    int 21h
+    
+main endp
+end main
+    
+    
