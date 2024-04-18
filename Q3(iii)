@@ -1,1 +1,44 @@
-.....
+; iii) J
+;      IJ
+;      HIJ
+;      .
+;      .
+;      BCDEFGHIJ
+;      ABCDEFGHIJ
+
+
+org 100h           
+jmp initiate         
+
+counter dw 0        
+length dw 0         
+string db 'ABCDEFGHIJ'  
+temp db ' '          
+
+initiate:           
+ mov cx, 10         
+ mov ah, 2           
+
+L1:                  
+ mov bx, offset temp 
+ mov length, cx      
+ inc counter         
+ sub bx, counter     
+ mov cx, counter     
+
+L2:                  
+ mov dl, [bx]        
+ int 21h             
+ inc bx              
+ loop L2             
+
+ mov dl, 0ah        
+ int 21h             
+ mov dl, 0dh          
+ int 21h             
+
+ mov cx, length      
+ loop L1             
+
+end                 
+
