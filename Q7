@@ -1,0 +1,65 @@
+;Input a string and then show it in reverse order
+
+printStr macro p1
+    lea dx,p1
+    mov ah,9
+    int 21h
+    
+endm    
+      
+
+.model small
+.stack 100h 
+.data
+   prompt db 0Ah,0Dh,'Please input a string:$'
+   
+   msg db 0Ah,0Dh,'Your String in reverse:$'
+   
+   str1a db 20
+   str1b db ?
+   str1c db 20 dup(?)
+   
+.code
+main proc
+   mov ax,@data
+   mov ds,ax
+   
+   printStr prompt
+   
+   lea dx,str1a
+   mov ah,10
+   int 21h   
+   
+   printStr msg
+   
+   mov cl,str1b
+   mov ch,0
+   lea si,str1c
+   
+   L1:
+   mov bx,[si]
+   push bx
+   
+   inc si 
+   
+   loop L1  
+   
+   mov cl,str1b
+   mov ch,0
+   
+   L2:
+   pop dx   
+   
+   mov ah,2
+   int 21h 
+   
+   loop L2
+   
+   exit:
+   mov ah,4ch
+   int 21h
+   
+    
+    
+main endp
+end main
