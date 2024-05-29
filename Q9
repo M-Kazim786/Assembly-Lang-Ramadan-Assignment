@@ -1,0 +1,53 @@
+;Input a string and then show letter "a" after each character
+
+.model small
+.stack 100h
+.data
+   prompt db 0Ah,0Dh,'Please input a string:$'
+    
+   str1a db 20
+   str1b db ?
+   str1c db 20 dup(?) 
+   
+   newline db 0Ah,0Dh,'$'                
+   
+.code
+main proc
+     mov ax,@data
+     mov ds,ax
+     
+     lea dx,prompt
+     mov ah,9
+     int 21h
+     
+     lea dx,str1a
+     mov ah ,10
+     int 21h    
+     
+     lea dx,newline
+     mov ah,9
+     int 21h
+      
+     mov cl,str1b 
+     mov ch,0
+     lea si,str1c
+     
+     L1:
+     mov dl,[si]
+     mov ah,2
+     int 21h 
+     
+     inc si 
+     
+     mov dl,'a'
+     mov ah,2
+     int 21h
+     
+     loop L1
+     
+     exit:
+     mov ah,4ch
+     int 21h  
+    
+main endp
+end main
