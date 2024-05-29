@@ -1,0 +1,67 @@
+;Input a string and display it one char per line
+
+.model small
+.stack 100h
+.data
+   prompt db 0Ah,0Dh,'Please input a string:$'
+   
+   str1a db 20
+   str1b db ?
+   str1c db 20 dup(?)
+   
+.code
+main proc
+     mov ax,@data
+     mov ds,ax
+     
+     lea dx,prompt
+     mov ah,9
+     int 21h
+     
+     lea dx,str1a
+     mov ah,10
+     int 21h
+     
+     mov cl,str1b
+     mov ch,0
+     
+     lea si,str1c
+     
+     call enterKey  
+     
+     L1:    
+     
+     mov dl,[si]
+     mov ah,2
+     int 21h
+     
+     inc si
+     
+     call enterKey
+     
+     loop L1  
+     
+     exit:
+     mov ah,4ch
+     int 21h
+     
+     
+    
+main endp 
+
+
+enterKey proc
+    
+    mov dx,10
+    mov ah,2
+    int 21h
+    
+    mov dx,13
+    mov ah,2
+    int 21h
+    
+    ret
+    
+enterKey endp
+
+end main
