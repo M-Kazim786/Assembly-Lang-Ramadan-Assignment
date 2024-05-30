@@ -1,0 +1,148 @@
+; Input a string and then input a letter, then search this letter in string,if it is not in the string then show not found ,otherwise 
+;show letter position in given string.
+
+.model small
+.stack 100h
+.data
+    prompt1 db 0Ah,0Dh,'Please input a String:$'
+    prompt2 db 0Ah,0Dh,'Please input a letter:$'
+    
+    msg1 db 0Ah,0Dh,'Not Found$'
+    msg2 db 0Ah,0Dh,'The letter is at index:$'
+    
+    str1a db 20
+    str1b db ?
+    str1c db 20 dup(?)
+    
+    
+.code
+
+  dispNum proc
+    
+    mov bp,sp
+    add bp,2
+    
+    push ax 
+    mov ax,[bp]
+    
+    push bx
+    
+    push cx
+    
+    push dx 
+    mov bx,0Ah
+    mov cx,0
+    mov dx,0
+    
+    dispLoop:
+    
+    div bx
+    push dx
+    mov dx,0
+    inc cx
+    cmp ax,0 
+    
+    jnz dispLoop
+    
+    showLoop:
+    pop dx
+    add dl,30h
+    mov ah,2
+    int 21h
+    
+    loop showLoop
+    
+    pop dx
+    pop cx 
+    pop bx
+    pop ax
+    
+    ret
+    
+    dispNum endp        
+main proc
+       mov ax,@data
+       mov ds,ax
+       
+       lea dx,prompt1
+       mov ah,9
+       int 21h
+       
+       lea dx,str1a
+       mov ah,10
+       int 21h
+       
+       lea dx,prompt2
+       mov ah,9
+       int 21h
+       
+       mov ah,1
+       int 21h
+       
+       mov bl,al
+       
+       lea si,str1c
+       
+       findLetter:
+       
+       mov al,[si]
+       cmp al,'$'
+       
+       je notFound
+       
+       cmp al,bl 
+       je found
+       
+       inc si 
+       
+       loop findLetter
+ 
+ 
+       notFound:
+       
+       lea dx,msg1
+       mov ah,9
+       int 21h 
+       
+       jmp exit
+       
+        
+       found:  
+       ; Calculate the position of the found character  
+    
+       mov dx, si         ; DX now holds the address of the found letter
+       sub dx, offset str1c ; Subtract the base address of the string to get the position
+       ;inc dx             ; Adjust position to start from 1
+    
+       push dx            ; Push the position onto the stack  
+       
+       lea dx,msg2
+       mov ah,9
+       int 21h
+    
+       call dispNum       ; Display the position
+     
+       jmp exit           ; Exit the program
+
+       
+       
+       exit:
+       
+       mov ah,4ch
+       int 21h
+       
+       
+main endp
+end main    
+
+; !!!!!!.....Explanation.....!!!!!!
+   
+
+
+;      str1c:       "HELLO$"
+;        |             ^
+;        |             |
+;        +-------------+
+;          0x2000      |
+;                     SI -> 0x2002
+;                     DX -> 0x3 (after calculation)
