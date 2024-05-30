@@ -1,0 +1,88 @@
+; Input a string and then show its size
+
+.model small
+.stack 100h
+.data
+   
+   msg1 db 0Ah,0Dh,'Input a String:$'
+   msg2 db 0Ah,0Dh,'The size of String is:$'
+   
+   str1a db 20
+   str1b db ?
+   str1c db 20 dup(?) 
+   
+.code  
+
+   dispNum proc
+    
+    mov bp,sp
+    add bp,2
+    
+    push ax 
+    mov ax,[bp]
+    
+    push bx
+    
+    push cx
+    
+    push dx 
+    mov bx,0Ah
+    mov cx,0
+    mov dx,0
+    
+    dispLoop:
+    
+    div bx
+    push dx
+    mov dx,0
+    inc cx
+    cmp ax,0 
+    
+    jnz dispLoop
+    
+    showLoop:
+    pop dx
+    add dl,30h
+    mov ah,2
+    int 21h
+    
+    loop showLoop
+    
+    pop dx
+    pop cx 
+    pop bx
+    pop ax
+    
+    ret
+    
+    dispNum endp
+
+main proc
+       
+       mov ax,@data
+       mov ds,ax
+       
+       lea dx,msg1
+       mov ah,9
+       int 21h
+       
+       lea dx,str1a
+       mov ah,10
+       int 21h 
+       
+       lea dx,msg2
+       mov ah,9
+       int 21h
+       
+       mov al, str1b  
+       cbw           
+
+       push ax        
+       call dispNum   
+
+       mov ax, 4C00h  
+       int 21h
+    
+    
+main endp
+end main
