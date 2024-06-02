@@ -1,0 +1,100 @@
+; Show following series:
+
+; 30,0,27,3,24,6....6,24,3,27,0,30
+
+.model small
+.stack 100h
+.data
+
+.code 
+
+numPrint proc
+     mov bp,sp 
+     add bp,2  
+     
+     push ax
+     push bx
+     push cx
+     push dx
+     
+     mov ax,[bp]
+     mov bx,0Ah
+     mov cx,0
+     mov dx,0
+     
+     divLoop:
+     
+     div bx
+     push dx
+     mov dx,0 
+     
+     inc cx
+     
+     cmp ax,0
+     jnz divLoop
+     
+     showLoop:
+     
+     pop dx
+     add dl,30h
+     
+     mov ah,2
+     int 21h
+     
+     loop showLoop  
+     
+     pop dx
+     pop cx
+     pop bx
+     pop ax
+     
+    
+     ret
+    
+numPrint endp
+
+main proc
+    
+     mov si,30
+     mov di,0 
+     mov bx,0 
+         
+     mov cx,11
+     
+     L1:
+             
+     add di,si
+     push si 
+     call numPrint 
+     
+     mov dl,','
+     mov ah,2
+     int 21h  
+     
+     add di,bx
+     push bx
+     call numPrint
+     
+     add bl,3 
+     
+     cmp cx,1
+     je exit 
+    
+     mov dl,','
+     mov ah,2
+     int 21h  
+     
+     sub si,3 
+    
+               
+     loop L1  
+    
+     
+     exit:
+     mov ah,4ch
+     int 21h
+     
+    
+main endp
+end main
+
