@@ -1,0 +1,119 @@
+; Show following series:
+
+; 7's Table
+; 7x1=7
+; 7x2=14
+; .
+; .
+;
+; 7x10=70
+
+.model small
+.stack 100h
+.data
+   newline db 0Ah,0Dh,'$'
+.code 
+
+numPrint proc
+     mov bp,sp 
+     add bp,2  
+     
+     push ax
+     push bx
+     push cx
+     push dx
+     
+     mov ax,[bp]
+     mov bx,0Ah
+     mov cx,0
+     mov dx,0
+     
+     divLoop:
+     
+     div bx
+     push dx
+     mov dx,0 
+     
+     inc cx
+     
+     cmp ax,0
+     jnz divLoop
+     
+     showLoop:
+     
+     pop dx
+     add dl,30h
+     
+     mov ah,2
+     int 21h
+     
+     loop showLoop  
+     
+     pop dx
+     pop cx
+     pop bx
+     pop ax
+     
+    
+     ret
+    
+numPrint endp 
+    
+   
+main proc 
+    
+     mov ax,@data
+     mov ds,ax
+     
+     mov ax,7
+     mov bx,1
+     
+     mov cx,10 
+     
+     
+     L1: 
+     
+     push ax
+     call numPrint
+     
+     
+     mov dl,'x'
+     mov ah,2
+     int 21h  
+     
+     push bx
+     call numPrint
+     
+     
+     mov dl,'='
+     mov ah,2
+     int 21h  
+     
+     mov ax,7
+     pop bx 
+     
+     mul bx 
+     
+     push ax
+    
+     call numPrint 
+     pop ax
+       
+     lea dx,newline
+     mov ah,9
+     int 21h
+      
+     mov ax,7
+      
+     inc bx
+    
+     loop L1
+     
+     exit:
+     mov ah,4ch
+     int 21h
+     
+    
+main endp
+end main
+
