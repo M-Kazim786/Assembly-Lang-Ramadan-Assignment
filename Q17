@@ -4,7 +4,7 @@
 .stack 100h
 .data
    prompt db 'Enter a number: $'
-   wr db 0Ah,0Dh,'$'
+   wr db 0Ah,0Dh,'Invalid Input!!!$'
    number dw 0
    newline db 10,13,'$'
 .code 
