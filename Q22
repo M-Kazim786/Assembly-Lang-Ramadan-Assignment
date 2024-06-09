@@ -1,0 +1,60 @@
+; Print the following:
+
+; Z
+; YZ
+; XYZ
+; WXYZ
+; VWXYZ
+; UVWXYZ
+
+
+.model small
+.stack 100h
+.data    
+
+   var1 db 0   
+   newline db 10,13,'$' 
+   
+.code
+main proc    
+    
+    mov ax,data
+    mov ds,ax
+    
+    mov bl,'Z'
+    
+    mov cx,1
+    
+    L1:
+    push cx
+    mov dl,bl  
+    sub dl,var1
+    
+    L2:
+    mov ah,2
+    int 21h
+    
+    inc dl
+    
+    
+    loop L2 
+    
+    lea dx,newline
+    mov ah,9
+    int 21h
+    
+    
+    inc var1
+    pop cx
+    inc cx
+    cmp cx,6
+    
+    jnz L1
+    
+    exit:
+    mov ah,4ch
+    int 21h
+    
+        
+main endp
+end main
