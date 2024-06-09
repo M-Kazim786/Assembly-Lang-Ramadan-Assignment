@@ -1,0 +1,41 @@
+;21> Assembly => String  
+;    AAsCsEeGmIbKlMyO
+
+.model small
+.stack 100h
+.data
+    msg1 db 'Assembly$'
+    
+.code
+main proc
+     mov ax,@data
+     mov ds,ax
+       
+     mov cx,8  
+     lea si,msg1
+     mov dl,'A'
+     
+     L1:
+     push dx
+     mov dl,[si]
+     mov ah,2
+     int 21h  
+     pop dx
+    
+     inc si 
+     
+     mov ah,2
+     int 21h  
+    
+     add dl,2
+     
+     loop L1
+     
+     exit:
+     mov ah,4ch
+     int 21h
+    
+    
+    
+main endp
+end main
