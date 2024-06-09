@@ -1,0 +1,41 @@
+;19>Input any letter,then show 'UBIT' equivalent to its ASCII value
+
+
+.model small 
+.stack 100h
+.data
+   prompt db 0Ah,0Dh,'Enter a letter:$'
+   msg1 db 0Ah,0Dh,'UBIT$'   
+   
+   newline db 10,13,'$'
+   
+.code
+main proc 
+     mov ax,@data
+     mov ds,ax 
+     
+     lea dx,prompt
+     mov ah,9
+     int 21h
+     
+     mov ah,1
+     int 21h
+     
+     mov bl,al
+     mov cl,bl
+     mov ch,0
+     
+     L1:
+     lea dx,msg1
+     mov ah,9
+     int 21h
+     
+     loop L1
+     
+     exit:
+     mov ah,4ch
+     int 21h
+      
+    
+main endp
+end main
