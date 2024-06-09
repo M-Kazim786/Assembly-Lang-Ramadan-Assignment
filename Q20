@@ -1,0 +1,57 @@
+; Print the following:   
+
+; A UBIT
+; B UBIT
+; C UBIT
+; .
+; .
+; .
+; Z UBIT
+
+
+.model small
+.stack 100h
+.data
+   msg1 db ,'UBIT$' 
+   newline db 10,13,'$'
+   
+.code
+main proc
+     mov ax,@data
+     mov ds,ax
+               
+     mov cx,26
+     mov dl,65
+     
+     
+     
+     L1:  
+     
+     mov ah,2
+     int 21h
+     
+     push dx
+     lea dx,msg1
+     mov ah,9
+     int 21h  
+     pop dx
+     
+     push dx
+     lea dx,newline
+     mov ah,9
+     int 21h
+     pop dx
+     
+     
+     inc dl
+     
+     loop L1
+     
+     exit:
+     mov ah,4ch
+     int 21h
+    
+    
+    
+main endp
+end main
