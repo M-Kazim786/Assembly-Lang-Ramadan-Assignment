@@ -1,4 +1,4 @@
-;19>Input any letter,then show 'UBIT' equivalent to its ASCII value
+;20>Input any letter,then show 'UBIT' equivalent to its ASCII value
 
 
 .model small 
